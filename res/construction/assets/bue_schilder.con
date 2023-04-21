@@ -1,0 +1,519 @@
+﻿local transf = require "transf"
+local constructionutil = require "constructionutil"
+local userId = 10000
+local modId = 1
+local modOrder = 1
+local z = 0
+local x = 0
+
+function data()
+return {
+	type = "ASSET_TRACK",
+	description = {
+		name = _("Bahnübergang Assets"),
+		description = _("Bahnübergang Assets Desc")
+	},
+	availability = {
+		yearFrom = 1950
+	},
+	buildMode = "MULTI",
+	categories = { "MW Signal Assets" },
+	order = (userId * 10000) + (modId * 100) + modOrder,
+	skipOnInit = true,
+	autoRemovable = false,	
+	skipCollision = true,
+
+	params = {
+		{
+			key = "Type",
+			name = _("Type"),
+			values = { _("Pfosten"), _("Bü gelb KM"), _("Bü weiß KM"), _("Bü weiß"), _("HET"), _("autom. HET"), _("ET"), _("autom. ET"),  _("Wiederholer Pfosten"), _("Wiederholer Signal"), _("P"), _("L"), _("Bü2 alt"), _("Bü2 neu"), _("Bü3"), _("Pfeifpflock"), _("E|E"), },
+			defaultIndex = 0,
+			tooltip = _("tooltip_type"),
+		},
+		{
+			key = "TrackPos",
+			name = _("TrackPos"),
+			values = { _("right"), _("left"), },
+			defaultIndex = 0,
+			tooltip = _("tooltip_trackpos"),
+		},
+		{
+			key = "MastPos",
+			name = _("MastPos"),
+			values = { _("oben"), _("1 unterhalb"), _("2 unterhalb") },
+			defaultIndex = 0,
+			tooltip = _("tooltip_mastpos"),
+		},
+		{
+			key = "autoNum",
+			name = _("AutoKM"),
+			values = { _("yes"), _("no"), },
+			defaultIndex = 0,
+			tooltip = _("tooltip_autokm"),
+		},
+	},
+
+	updateFn = function(params)
+		local result = {}
+		result.models =  {}	
+		result.labelText =  {}
+		result.groundFaces = { }
+		
+		local xPosition = 0
+		local zPosition = 0
+		local yPosition = -2.15
+		local xPositionHalter = 0
+		local scalefactor = 0
+				
+		if params.Type == 0 then -- Pfosten
+			if params.TrackPos == 0 then
+			result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_mast.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition-0.015, yPosition, zPosition+0.8, 1 }, }
+			elseif params.TrackPos == 1 then
+			result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_mast.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition-0.015, yPosition, zPosition+0.8, 1 }, }
+			end
+		elseif params.Type == 1 then -- Bü gelb KM
+			local bottomText = tostring(string.format("%.1f", tostring(math.random()*100)):gsub("%.", ","))
+			result.labelText = { [0] = {bottomText}, [1] = {bottomText}, }
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end
+				if params.autoNum == 0 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_gelb.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				elseif params.autoNum == 1 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_gelb_eingabe.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				end
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end
+				if params.autoNum == 0 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_gelb.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				elseif params.autoNum == 1 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_gelb_eingabe.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				end
+			end
+		elseif params.Type == 2 then -- Bü weiß KM
+			local topText = "Bü"
+			local bottomText = tostring(string.format("%.1f", tostring(math.random()*100)):gsub("%.", ","))
+			result.labelText = { [0] = {bottomText}, [1] = {bottomText}, }
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end
+				if params.autoNum == 0 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				elseif params.autoNum == 1 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_eingabe.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				end 
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end
+				if params.autoNum == 0 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				elseif params.autoNum == 1 then
+				result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_eingabe.mdl", transf = { -1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+				end
+			end
+		elseif params.Type == 3 then -- Bü Bü weiß
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_tafel_bue_bue.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_tafel_bue_bue.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 4 then -- HET
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_het.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_het.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 5 then -- Automatik HET
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_auto_het.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_auto_het.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 6 then -- ET
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_et.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_et.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 7 then -- Automatik ET
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_auto_et.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_auto_et.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 8 then -- Wiederholer_Pfosten
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_wiederholer_pfosten.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_wiederholer_pfosten.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 9 then -- Wiederholer_Signal
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = .7
+					yPosition = -2.15
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .7
+					yPosition = -2.15
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .7
+					yPosition = -2.15
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_wiederholer.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = -.7
+					yPosition = -2.15
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.7
+					yPosition = -2.15
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.7
+					yPosition = -2.15
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_wiederholer.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 10 then -- Pfeiftafel "P"
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_p.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_p.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 11 then -- Läuttafel "L"
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_l.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_l.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 12 then -- Bü2 Alt
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue2_alt.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue2_alt.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 13 then -- Bü2 Neu
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue2_neu.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue2_neu.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 14 then -- Bü3
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue3.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.5
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.1
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_bue3.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 15 then -- Pfeifpflock
+			if params.TrackPos == 0 then
+					xPosition = -.06
+			result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_pfeifpflock.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+					xPosition = .06
+			result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_pfeifpflock.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition, zPosition, 1 }, }
+			end
+		elseif params.Type == 16 then -- Endetafel "E|E"
+			local topText = "E"
+			result.labelText = { [0] = { topText,}, [1] = { topText,}, }
+			if params.TrackPos == 0 then
+				if params.MastPos == 0 then
+					xPosition = -.06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = -.06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = -.06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_schmal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition - 0.185, zPosition, 1 }, } 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_schmal.mdl", transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, xPosition, yPosition + 0.185, zPosition, 1 }, }
+			elseif params.TrackPos == 1 then
+				if params.MastPos == 0 then
+					xPosition = .06
+					zPosition = 2.3
+				elseif params.MastPos == 1 then
+					xPosition = .06
+					zPosition = 1.9
+				elseif params.MastPos == 2 then
+					xPosition = .06
+					zPosition = 1.5
+				end 
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_schmal.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition - 0.185, zPosition, 1 }, }
+			    result.models[#result.models+1] = { id = "railroad/BUe-Signale/bue_weiss_schmal.mdl", transf = {-1, 0, 0, 0, -0, -1, 0, 0, 0, 0, 1, 0, xPosition, yPosition + 0.185, zPosition, 1 }, }
+			end
+		end
+		
+		
+		result.groundFaces[1] = { face = { {0.01, -0.01}, { 0.01, 0.01}, {-0.01, 0.01}, {-0.01, -0.01} }, modes = { { type = "FILL", key = "industry_floor.lua" } } }
+		result.terrainAlignmentLists = {
+            {
+    			type = "EQUAL",
+    			faces =  { },
+    		},
+        }
+
+		return result
+	end
+}
+
+end

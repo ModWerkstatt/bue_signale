@@ -1,0 +1,102 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 1, 2, 8, },
+		bbMin = { -1, -2, -1, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.49642997980118, 1.1774350404739, 4.8709001541138, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0.023980006575584, -1.1774350404739, 3.1483700275421, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/mast_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+                    {
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/mastschild_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+                    {
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/schirm_alt_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.12, 0, 3.965, 1, },
+					},
+					--- PZB ---
+					{						
+						materials = { "ks_signale/misc/ks_signal_misc.mtl", },
+						mesh = "ks_signale/misc/ks_pzb_1000.msh",					
+						transf = {1, 0, 0, 0, -0, 1, 0, 0, 0, 0, 1, 0, 0, -3.14, 0.02, 1, },
+					},
+					
+					--- Licht ---
+					
+					{
+						materials = { "railroad/emissive/railroad_lights_all_colors.mtl", },
+						mesh = "railroad/BUe-Signale/licht_orange_lod0.msh",
+						name = "Licht orange",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.1625, 0, 3.75, 1, },
+					},
+                    {
+						animations = {
+                            green = {
+								params = {
+									id = "railroad/buesig/blink.ani",
+								},
+								type = "FILE_REF",
+							},					
+                            idle_green = {
+								params = {
+									id = "railroad/buesig/blink.ani",
+								},
+								type = "FILE_REF",
+							},
+						},
+						materials = { "railroad/emissive/railroad_lights_all_colors.mtl", },
+						mesh = "railroad/BUe-Signale/licht_weiss_lod0.msh",
+						name = "Licht weiss",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.135, 0, 4.36, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 2.15, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 1000,
+		},
+	},
+	metadata = {
+		availability = {
+			yearFrom = 1960,
+			yearTo = 1980,
+		},
+		category = {
+			categories = { "BUe-Signale" },
+		},
+		cost = {
+			price = 4500,
+			priceScale = 1,
+		},
+		description = {
+			name = _("BÜ0/BÜ1 Bauform 1960") .. _("links"),
+            description = _("BÜ Signale Description"),
+		},
+		signal = {
+			type = "WAYPOINT",
+		},
+	},
+	version = 1,
+}
+end

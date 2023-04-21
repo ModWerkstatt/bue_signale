@@ -1,0 +1,87 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 1, 2, 8, },
+		bbMin = { -1, -2, -1, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.49642997980118, 1.1774350404739, 4.8709001541138, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0.023980006575584, -1.1774350404739, 3.1483700275421, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/AT_Ek_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+					--- PZB ---
+					{						
+						materials = { "ks_signale/misc/ks_signal_misc.mtl", },
+						mesh = "ks_signale/misc/ks_pzb_1000.msh",					
+						transf = {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1.2, 0.02, 1, },
+					},
+					
+					--- Licht ---
+					
+					{
+						animations = {
+                            green = {
+								params = {
+									id = "railroad/buesig/on.ani",
+								},
+								type = "FILE_REF",
+							},					
+                            idle_green = {
+								params = {
+									id = "railroad/buesig/blink.ani",
+								},
+								type = "FILE_REF",
+							},
+						},
+						materials = { "railroad/emissive/railroad_lights_all_colors.mtl", },
+						mesh = "railroad/BUe-Signale/AT_licht_gelb_lod0.msh",
+						name = "Licht gelb",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -0.095, 0, 2.43, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, -2.15, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 1000,
+		},
+	},
+	metadata = {
+		availability = {
+			yearFrom = 1950,
+			yearTo = 0,
+		},
+		category = {
+			categories = { "BUe-Signale" },
+		},
+		cost = {
+			price = 4500,
+			priceScale = 1,
+		},
+		description = {
+			name = _("BÜ Signal der ÖBB"),
+            description = _("BÜ Signale Description"),
+		},
+		signal = {
+			type = "WAYPOINT",
+		},
+        bue_signale = {
+            country = "at",
+        }
+	},
+	version = 1,
+}
+end

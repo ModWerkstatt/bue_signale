@@ -1,0 +1,49 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.1, -0.2, 2.5, },
+		bbMin = { -0.1, 0.2, -0.9, },
+	},
+	collider = {
+		params = { },
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/betonpfosten_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 400,
+		},
+	},
+	metadata = {
+		description = {
+			name = _("Pfosten"),
+		},
+		availability = {
+			yearFrom = 1950,
+			yearTo = 0,
+		},
+		category = {
+			categories = { "MW_Signal_assets" },
+		},
+		cost = {
+			price = -1,
+			priceScale = 1,
+		},
+	},
+	version = 1,
+}
+end

@@ -1,0 +1,51 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.094, 0.094, 0.67, },
+		bbMin = { -0.043, -0.094, -0.67, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.068, 0.094, 0.66, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/Bue3tafel_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 250,
+		},
+	},
+	metadata = {
+		availability = {
+			yearFrom = 1950,
+			yearTo = 0,
+		},
+		category = {
+			categories = { "MW_Signal_assets" },
+		},
+		cost = {
+			price = 4500,
+			priceScale = 1,
+		},
+		description = {
+			name = _("BUe3"),
+		},
+	},
+	version = 1,
+}
+end

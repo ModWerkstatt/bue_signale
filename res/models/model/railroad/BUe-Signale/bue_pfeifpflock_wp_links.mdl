@@ -1,0 +1,59 @@
+function data()
+return {
+	boundingInfo = {
+		bbMax = { 0.52041000127792, 0, 8.0192699432373, },
+		bbMin = { -0.47244998812675, -2.3548700809479, -1.7225300073624, },
+	},
+	collider = {
+		params = {
+			halfExtents = { 0.49642997980118, 1.1774350404739, 4.8709001541138, },
+		},
+		transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0.023980006575584, -1.1774350404739, 3.1483700275421, 1, },
+		type = "BOX",
+	},
+	lods = {
+		{
+			node = {
+				children = {
+					{
+						materials = { "railroad/BUe-Signale/buesignale.mtl", },
+						mesh = "railroad/BUe-Signale/AT_Pfeifpflock_lod0.msh",
+						name = "BÜ Signal",
+						transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -1, 1, },
+					},
+				},
+				name = "RootNode",
+				transf = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 2.15, 0, 1, },
+			},
+			static = false,
+			visibleFrom = 0,
+			visibleTo = 500,
+		},
+	},
+	metadata = {
+		availability = {
+			yearFrom = 1950,
+			yearTo = 0,
+		},
+		category = {
+			categories = { "BUe-Signale" },
+		},
+		cost = {
+			price = 4500,
+			priceScale = 1,
+		},
+		description = {
+            name = _("Pfeifpflock AT"),
+			description = _("Pfeifpflock AT") .. _("links") .. _("Auslöser"),
+		},
+		signal = {
+			type = "WAYPOINT",
+			soundevent = "horn",
+		},
+        bue_signale = {
+            country = "at",
+        }
+	},
+	version = 1,
+}
+end
