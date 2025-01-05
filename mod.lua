@@ -1,7 +1,7 @@
 ﻿function data()
 return {
 	info = {
-		minorVersion = 3,
+		minorVersion = 4,
 		severityAdd = "NONE",
 		severityRemove = "WARNING",
 		name = _("mod_name"),
@@ -28,12 +28,9 @@ return {
 
 		local function ATFilter(fileName, data)
 			if data.metadata.signal and data.metadata.bue_signale and data.metadata.bue_signale.country == "at" then
-				print "yes"
                 data.metadata.availability.yearFrom = 1
 				data.metadata.availability.yearTo = 2
-				--return false
 			end
-			--return true
 			return data
 		end
 
